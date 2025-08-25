@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Блог</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <main class="max-w-5xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-extrabold">Блог</h1>
+    <p class="text-gray-600 mt-2">Посты генерируются автоматически через GitHub Actions.</p>
+    <div id="list" class="grid gap-4 mt-6"></div>
+  </main>
+  <script>
+    fetch('/blog/feed.json').then(r=>r.json()).then(feed=>{
+      const list = document.getElementById('list');
+      list.innerHTML = feed.map(p=>`<a class="block p-4 bg-white rounded-2xl shadow hover:shadow-md transition" href="/blog/${p.slug}/">
+        <h3 class="font-semibold">${p.title}</h3>
+        <p class="text-sm text-gray-600 mt-1">${p.excerpt}</p>
+        <p class="text-xs text-gray-400 mt-2">${p.date}</p>
+      </a>`).join('');
+    });
+  </script>
+</body>
+</html>
