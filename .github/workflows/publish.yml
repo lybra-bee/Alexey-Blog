@@ -1,14 +1,6 @@
 name: Build & Auto-Post
 
 on:
-  workflow_dispatch:  # ручной запуск через GitHub
-  schedule:
-    - cron: '0 */6 * * *'
-  push:
-    branches:
-      - main
-
-on:
   schedule:
     - cron: '0 */6 * * *'  # каждые 6 часов
   push:
