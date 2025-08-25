@@ -1,11 +1,12 @@
 name: Build & Auto-Post
 
 on:
+  workflow_dispatch:       # ручной запуск через GitHub UI
   schedule:
-    - cron: '0 */6 * * *'  # каждые 6 часов
+    - cron: '0 */6 * * *' # автоматический запуск каждые 6 часов
   push:
     branches:
-      - main
+      - main              # запуск при пуше в main
 
 jobs:
   build:
@@ -14,29 +15,35 @@ jobs:
       HF_TOKEN: ${{ secrets.HF_TOKEN }}  # Hugging Face token
 
     steps:
+      # 1️⃣ Клонируем репозиторий
       - uses: actions/checkout@v3
 
+      # 2️⃣ Устанавливаем Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
+      # 3️⃣ Устанавливаем зависимости
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests markdown jinja2 pillow
 
+      # 4️⃣ Генерируем AI-пост
       - name: Generate AI post
         run: |
           python scripts/generate_ai_content.py
 
+      # 5️⃣ Собираем сайт
       - name: Build site
         run: |
           python scripts/build.py
 
+      # 6️⃣ Деплой на GitHub Pages через PAT
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.GH_PAT }}
+          personal_token: ${{ secrets.GH_PAT }}  # твой Personal Access Token
           publish_dir: ./_site
-          # branch: gh-pages   # если хочешь деплой в отдельную ветку
+          # branch: gh-pages   # раскомментируй, если хочешь отдельную ветку для Pages
