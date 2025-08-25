@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alexey — AI Engineer & Web Designer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="I build chatbots, AI video, and beautiful web apps.">
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <header class="sticky top-0 z-10 bg-white/80 backdrop-blur shadow">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="/" class="text-xl font-bold">Alexey — AI Engineer & Web Designer</a>
+      <nav class="flex gap-4 text-sm">
+        <a href="/blog/" class="hover:underline">Блог</a>
+        <a href="#projects" class="hover:underline">Проекты</a>
+        <a href="#contact" class="hover:underline">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4">
+    <section class="py-16">
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">Привет! Я Alexey. <span class="text-indigo-600">Инженер ИИ</span> и веб‑дизайнер.</h1>
+      <p class="mt-4 text-lg text-gray-600">I build chatbots, AI video, and beautiful web apps.</p>
+      <div class="mt-6 flex gap-3">
+        <a href="/blog/" class="px-5 py-3 rounded-2xl bg-indigo-600 text-white font-medium">Читать блог</a>
+        <a href="#projects" class="px-5 py-3 rounded-2xl border border-gray-300">Портфолио</a>
+      </div>
+    </section>
+
+    <section id="projects" class="py-10">
+      <h2 class="text-2xl font-bold mb-6">Избранные проекты</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <article class="p-5 bg-white rounded-2xl shadow">
+          <h3 class="font-semibold">Telegram‑бот: PromptToVideo</h3>
+          <p class="text-sm text-gray-600 mt-2">Генерация видео, озвучки и музыки по тексту. FastAPI + Zeroscope + Coqui TTS + MusicGen.</p>
+          <a class="inline-block mt-3 text-indigo-600" href="#contact">Подробнее</a>
+        </article>
+        <article class="p-5 bg-white rounded-2xl shadow">
+          <h3 class="font-semibold">AI Portfolio Website</h3>
+          <p class="text-sm text-gray-600 mt-2">Самообновляющийся блог с генерацией статей и картинок через GitHub Actions + Hugging Face.</p>
+          <a class="inline-block mt-3 text-indigo-600" href="/blog/">Блог</a>
+        </article>
+        <article class="p-5 bg-white rounded-2xl shadow">
+          <h3 class="font-semibold">UI‑компоненты</h3>
+          <p class="text-sm text-gray-600 mt-2">Набор аккуратных Tailwind‑компонентов и анимаций для быстрых MVP.</p>
+          <a class="inline-block mt-3 text-indigo-600" href="#contact">Запросить демо</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="py-10">
+      <h2 class="text-2xl font-bold mb-4">Последние посты</h2>
+      <div id="posts" class="grid gap-4"></div>
+      <script>
+        fetch('/blog/feed.json').then(r=>r.json()).then(feed=>{
+          const wrap = document.getElementById('posts');
+          if(!Array.isArray(feed) || feed.length===0) {
+            wrap.innerHTML = '<p class="text-gray-600">Ещё нет постов. Загляни позже!</p>';
+            return;
+          }
+          wrap.innerHTML = feed.slice(0,6).map(p=>`<a class="block p-4 bg-white rounded-2xl shadow hover:shadow-md transition" href="/blog/${p.slug}/">
+              <h3 class="font-semibold">${p.title}</h3>
+              <p class="text-sm text-gray-600 mt-1">${p.excerpt}</p>
+              <p class="text-xs text-gray-400 mt-2">${p.date}</p>
+            </a>`).join('');
+        });
+      </script>
+    </section>
+
+    <section id="contact" class="py-10">
+      <h2 class="text-2xl font-bold mb-4">Контакты</h2>
+      <ul class="text-gray-700">
+        <li>Telegram: <a class="text-indigo-600" href="https://t.me/Lybra777">@Lybra777</a></li>
+        <li>GitHub: <a class="text-indigo-600" href="https://github.com/Lybrabee">https://github.com/Lybrabee</a></li>
+        <li>Email: <a class="text-indigo-600" href="mailto:your@email.com">your@email.com</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="py-10 text-center text-sm text-gray-500">© 2025 Alexey. Сделано с ♥ и ИИ.</footer>
+</body>
+</html>
